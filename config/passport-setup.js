@@ -20,7 +20,7 @@ passport.use(
     new GoogleStrategy({
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: 'devoted-healing-production.up.railway.app',
+        callbackURL: 'https://devoted-healing-production.up.railway.app/',
     }, (accessToken, refreshToken, profile, done) => {
 
         console.log('passport-callback-function-fired');
