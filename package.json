@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www"
-    "dev": "nodemon ./bin/www"
   },
   "dependencies": {
     "async": "^3.2.5",
