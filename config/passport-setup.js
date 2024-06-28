@@ -5,6 +5,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const dotenv = require('dotenv').config();
 const User = require('../models/userModel');
 
+// Log environment variables to verify
+console.log("Google Client ID:", process.env.clientID);
+console.log("Google Client Secret:", process.env.clientSecret);
+
 passport.serializeUser((user, done) => {
     done(null, user);
 });
@@ -15,14 +19,12 @@ passport.deserializeUser((id, done) => {
     }).catch(err => done(err));
 });
 
-
 passport.use(
     new GoogleStrategy({
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
         callbackURL: 'https://devoted-healing-production.up.railway.app/auth/google/redirect',
     }, (accessToken, refreshToken, profile, done) => {
-
         console.log('passport-callback-function-fired');
 
         User.findOne({ googleId: profile.id }).then((currentUser) => {
