@@ -1,4 +1,5 @@
 // In your main application file (app.js or server.js)
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
