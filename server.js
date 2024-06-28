@@ -1,3 +1,4 @@
+// In your main application file (app.js or server.js)
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -11,11 +12,14 @@ const createError = require('http-errors');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/usersRouter');
 const authRouter = require('./routes/auth');
-
 const bodyParser = require('body-parser');
 const routes = require('./routes/serviceRouter.js');
 
 const app = express();
+
+// Log environment variables to verify
+console.log("Google Client ID:", process.env.clientID);
+console.log("Google Client Secret:", process.env.clientSecret);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -24,10 +28,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 app.use(express.static('public'));
 
-app.set('trust proxy', 1) 
+app.set('trust proxy', 1);
 
 app.use(
   session({
@@ -37,7 +40,6 @@ app.use(
     cookie: { maxAge: 24 * 60 * 60 * 1000 }
   })
 );
-
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -52,26 +54,9 @@ app.use((req, res, next) => {
 });
 
 app.use('/profile', indexRouter);
-
 app.use('/users', usersRouter);
-
 app.use('/auth', authRouter);
-
-app.use('/service',require("./routes/serviceRouter.js"));
-
-app.use('/forgot',require("./routes/usersRouter.js"));
-
-app.use('/resetPassword',require("./routes/usersRouter.js"));
-
-app.use('/reset/:token',require("./routes/usersRouter.js")); 
-
-app.use('/logout',require("./routes/usersRouter.js"));
-
-app.use('/dashboard',require("./routes/usersRouter.js"));
-
-app.use('/verifyOtp',require("./routes/usersRouter.js"));
-
-app.use('/registerUserWithOTP',require("./routes/usersRouter.js"));
+app.use('/service', require("./routes/serviceRouter.js"));
 
 app.use(function(req, res, next) {
   next(createError(404));
